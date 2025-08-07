@@ -1,308 +1,548 @@
-# 🤖 Kiara - AI Documentation Agent
+# 🤖 Kiara - AI Documentation Agent Enhanced
 
-**Agente inteligente de documentação automática powered by Oracle Cloud AI**
+**AI-powered automatic documentation generator with multi-provider support**
 
-Kiara é um agente de IA especializado em gerar documentação técnica profissional para qualquer projeto automaticamente. Utilizando Oracle Cloud Infrastructure (OCI) AI com modelos avançados, Kiara analisa repositórios GitHub, projetos locais e gera READMEs completos e adaptativos.
+Kiara is an intelligent AI documentation agent that automatically generates professional technical documentation for any project. Leveraging multiple AI providers including xAI Grok 4, Oracle Cloud AI, and Groq, Kiara analyzes GitHub repositories, Azure DevOps projects, and local codebases to create comprehensive, adaptive README files.
 
-## ✨ Principais Funcionalidades
+## ✨ Key Features
 
-- 🔍 **Análise Inteligente**: Detecção automática de linguagens, frameworks e arquiteturas
-- 📝 **Documentação Profissional**: 4 templates adaptativos (Minimal, Emoji Rich, Modern, Technical Deep)
-- 🚀 **Oracle Cloud AI**: Powered by `meta.llama-4-maverick-17b-128e-instruct` + `Scout` (visão)
-- 📊 **Suporte Universal**: GitHub, Azure DevOps, e projetos locais
-- 🔄 **Detecção de Commits**: Sistema inteligente que detecta atualizações nos repositórios
-- 💾 **Cache Inteligente**: SQLite3 para otimização e histórico
-- 🎯 **Interface Dupla**: CLI simples e interface interativa aprimorada
+- 🧠 **Multi-AI Architecture**: Primary support for xAI Grok 4 (131K tokens), Oracle Cloud AI (Meta Llama + Scout Vision), and Groq
+- 🔍 **Intelligent Analysis**: Automatic detection of languages, frameworks, architectures, and project patterns
+- 📝 **Professional Templates**: 4+ adaptive templates (Minimal, Emoji Rich, Modern, Technical Deep, Comprehensive)
+- 🚀 **Universal Support**: GitHub, Azure DevOps, and local project analysis
+- 🔄 **Smart Commit Detection**: Intelligent system that tracks repository updates and suggests regeneration
+- 💾 **Intelligent Caching**: SQLite3-based caching with Redis support for optimization
+- 🎯 **Multiple Interfaces**: Simple CLI, enhanced interactive mode, and REST API server
+- 👁️ **Vision Analysis**: Advanced image processing and screenshot understanding
+- 📊 **MCP Integration**: Model Context Protocol support for enhanced GitHub analysis
 
-## 🚀 Instalação
+## 🛠️ Architecture
 
-### Pré-requisitos
+### AI Providers
+- **xAI Grok 4**: Primary provider with 131K token output capacity
+- **Oracle Cloud AI**: Meta Llama models with Scout vision capabilities
+- **Groq**: Fast inference with Llama 3.1 and vision models
+- **Fallback System**: Automatic provider switching for reliability
 
-- **Python 3.11+** (obrigatório)
-- **Node.js 18+** (para GitHub MCP Server)
-- **Token GitHub** (para repositórios privados)
-- **Oracle Cloud AI** configurado
+### Core Components
+- **Documentation Generator**: Main orchestrator for generating documentation
+- **Template Engine**: Adaptive template system with professional styling
+- **Language Detector**: Advanced programming language and framework detection
+- **Vision Processor**: Image analysis and screenshot processing
+- **Commit Tracker**: Intelligent repository change detection
+- **MCP Client**: GitHub repository analysis via Model Context Protocol
+- **Cache Manager**: Multi-tier caching with SQLite and Redis support
 
-### Instalação Rápida
+## 🚀 Installation
+
+### Prerequisites
+
+- **Python 3.11+** (required)
+- **Node.js 18+** (for GitHub MCP Server)
+- **API Keys**: At least one AI provider (xAI Grok, Oracle Cloud, or Groq)
+- **GitHub Token** (for private repositories)
+
+### Quick Installation
 
 ```bash
-# Clone ou descompacte o projeto Kiara
+# Clone the project
+git clone <repository-url>
 cd Kiara
 
-# Instale dependências (usando uv - recomendado)
+# Install dependencies (using uv - recommended)
 pip install uv
 uv sync
 
-# Ou usando pip tradicional
+# Or using pip traditional
 pip install -r requirements.txt
 
-# Instalar GitHub MCP Server
+# Install GitHub MCP Server
 npm install -g @github/github-mcp-server
 ```
 
-### Configuração
+### Configuration
 
-1. **Configure o arquivo de ambiente:**
+1. **Set up environment file:**
 ```bash
 cp .env.example .env
-nano .env  # ou seu editor preferido
+nano .env  # or your preferred editor
 ```
 
-2. **Variáveis essenciais no .env:**
+2. **Essential environment variables:**
 ```bash
-# GitHub (obrigatório)
-GITHUB_TOKEN=ghp_your_github_token_here
+# Primary AI Provider - xAI Grok (Recommended)
+XAI_GROK_API_KEY=xai-your_api_key_here
+XAI_GROK_MODEL_ID=grok-4-turbo-128k
+XAI_GROK_MAX_TOKENS=131072
+XAI_GROK_ENABLED=true
 
-# Oracle Cloud AI (obrigatório)
+# Backup AI Provider - Oracle Cloud
 OCI_COMPARTMENT_ID=ocid1.tenancy.oc1..your_compartment_id_here
 OCI_MODEL_ID=meta.llama-4-maverick-17b-128e-instruct
 OCI_MODEL_VISION=Scout
 OCI_ENABLED=true
+
+# GitHub Integration
+GITHUB_TOKEN=ghp_your_github_token_here
+
+# Optional: Azure DevOps
+AZURE_DEVOPS_PAT=your_azure_devops_token_here
 ```
 
-3. **Configure Oracle Cloud CLI:**
+3. **Configure Oracle Cloud CLI (if using OCI):**
 ```bash
 oci setup config
-# Siga as instruções para configurar credenciais OCI
+# Follow instructions to set up OCI credentials
 ```
 
-## 🎯 Como Usar
+## 🎯 Usage
 
-### Opção 1: CLI Simples (Recomendado para início)
+### Option 1: Entry Point CLI
+```bash
+python kiara_entry.py
+```
 
+**Available Commands:**
+- `analyze` - Analyze local project and generate documentation
+- `github` - Generate documentation for GitHub repository  
+- `serve` - Start API server
+- `interactive` - Launch enhanced interactive mode
+- `info` - Show configuration and status
+
+### Option 2: Simple CLI
 ```bash
 python kiara_cli.py
 ```
 
-**Funcionalidades:**
-- Geração de documentação para GitHub
-- Análise de projetos locais  
-- Seleção de templates
-- Detecção automática de commits
-- Interface limpa e objetiva
+**Features:**
+- GitHub repository documentation
+- Local project analysis
+- Template selection
+- Automatic commit detection
+- Clean, objective interface
 
-### Opção 2: Interface Interativa Aprimorada
-
+### Option 3: Enhanced Interactive Mode
 ```bash
 python kiara_interactive_enhanced.py
 ```
 
-**Funcionalidades extras:**
-- Geração em lote (múltiplos repositórios)
-- Análise rápida de repositórios
-- Servidor API integrado
-- Configurações avançadas
-- Interface rica com mais opções
+**Additional Features:**
+- Batch processing (multiple repositories)
+- Quick repository analysis
+- Integrated API server
+- Advanced configurations
+- Rich interface with extensive options
 
-### Opção 3: Modo API/Servidor
-
+### Option 4: API Server Mode
 ```bash
-python -m src.main serve --host 0.0.0.0 --port 8000
+python kiara_entry.py serve --host 0.0.0.0 --port 8000
 ```
 
-**Endpoints disponíveis:**
-- `POST /generate` - Gerar documentação
-- `GET /health` - Status da API
-- `GET /templates` - Listar templates
+**Available Endpoints:**
+- `POST /generate` - Generate documentation
+- `GET /health` - API status
+- `GET /templates` - List available templates
+- `GET /config` - Show configuration status
 
-## 🛠️ Sistema de Detecção de Commits
+## 🔄 Smart Commit Detection System
 
-Kiara possui um sistema inteligente que monitora atualizações em repositórios GitHub:
+Kiara features an intelligent system that monitors GitHub repository updates:
 
-### 🔄 **Como Funciona**
+### How It Works
 
-1. **Primeira análise**: Sistema registra o commit atual silenciosamente
-2. **Commits iguais**: Pergunta se deseja gerar novamente  
-3. **Novos commits**: Mostra: *"Vejo que você atualizou seu projeto, vamos atualizar o readme também?"*
+1. **First Analysis**: System silently registers current commit
+2. **Same Commit**: Asks if you want to regenerate documentation
+3. **New Commits**: Shows: *"I see you've updated your project, let's update the README too!"*
+4. **Smart Caching**: Avoids unnecessary regenerations while staying current
 
-### 📊 **Banco de Dados**
+### Database Schema
 
 - **SQLite3**: `cache/github_repos.db`
-- **Tabela**: `repositories` (url, owner, name, last_commit_sha, last_checked_at)
-- **Escopo**: Apenas repositórios GitHub
+- **Tables**: 
+  - `repositories` (url, owner, name, last_commit_sha, last_checked_at)
+  - `generations` (commit history, success rates, metadata)
+- **Scope**: GitHub repositories with intelligent change detection
 
-## 📋 Templates Disponíveis
+## 📋 Available Templates
 
-| Template | Estilo | Melhor Para | Características |
-|----------|--------|-------------|----------------|
-| **MINIMAL** | Clean & Professional | Documentação Empresarial | Sem emojis, tom formal, abrangente |
-| **EMOJI_RICH** | Fun & Engaging | Projetos da Comunidade | 50+ emojis, tom entusiasmado, apelo visual |
-| **MODERN** | GitHub-style Contemporary | Projetos Open Source | Badges, tabelas, TOC, markdown moderno |
-| **TECHNICAL_DEEP** | Enterprise Technical | Sistemas de Produção | Arquitetura, deployment, compliance |
+| Template | Style | Best For | Characteristics |
+|----------|--------|----------|----------------|
+| **MINIMAL** | Clean & Professional | Enterprise Documentation | No emojis, formal tone, comprehensive |
+| **EMOJI_RICH** | Fun & Engaging | Community Projects | 50+ emojis, enthusiastic tone, visual appeal |
+| **MODERN** | GitHub-style Contemporary | Open Source Projects | Badges, tables, TOC, modern markdown |
+| **TECHNICAL_DEEP** | Enterprise Technical | Production Systems | Architecture, deployment, compliance |
+| **COMPREHENSIVE** | All-inclusive | Complex Projects | Combines best features of all templates |
 
-## ⚙️ Configuração Avançada
+## ⚙️ Advanced Configuration
 
-### Oracle Cloud AI
+### xAI Grok 4 (Primary AI)
 
 ```bash
-# Modelos disponíveis
-OCI_MODEL_ID=meta.llama-4-maverick-17b-128e-instruct    # Texto
-OCI_MODEL_VISION=Scout                                   # Visão
-OCI_MAX_TOKENS=4000                                     # Limite de tokens
-OCI_TEMPERATURE=0.2                                     # Criatividade (0.0-1.0)
+XAI_GROK_API_KEY=xai-your_api_key_here
+XAI_GROK_MODEL_ID=grok-4-turbo-128k        # Latest Grok model
+XAI_GROK_MAX_TOKENS=131072                  # 131K token output
+XAI_GROK_TEMPERATURE=0.1                    # Creativity (0.0-1.0)
+XAI_GROK_ENABLED=true
+```
+
+### Oracle Cloud AI (Backup)
+
+```bash
+OCI_COMPARTMENT_ID=ocid1.tenancy.oc1..your_id_here
+OCI_MODEL_ID=meta.llama-4-maverick-17b-128e-instruct    # Text model
+OCI_MODEL_VISION=Scout                                   # Vision model
+OCI_MAX_TOKENS=4000                                     # Token limit
+OCI_TEMPERATURE=0.2                                     # Creativity
+OCI_ENABLED=true
+```
+
+### Groq (Fallback)
+
+```bash
+GROQ_API_KEY=gsk_your_groq_api_key_here
+GROQ_MODEL_TEXT=llama-3.1-70b-versatile
+GROQ_MODEL_VISION=llama-3.2-90b-vision-preview
+GROQ_MAX_TOKENS=8000
 ```
 
 ### GitHub Integration
 
 ```bash
-# Scopes necessários no token GitHub
-# - repo (acesso total a repositórios)
-# - read:user (informações do usuário)  
-# - user:email (emails do usuário)
+# Required scopes for GitHub token:
+# - repo (full repository access)
+# - read:user (user information)
+# - user:email (user emails)
 GITHUB_TOKEN=ghp_your_token_with_repo_scope
+GITHUB_API_URL=https://api.github.com
 ```
 
-### Análise de Visão
+### Vision Analysis
 
 ```bash
-# Processamento de imagens
 VISION_ANALYSIS_ENABLED=true
 VISION_MAX_IMAGE_SIZE=5242880           # 5MB
 VISION_SUPPORTED_FORMATS=png,jpg,jpeg,gif,bmp,webp,svg
 ```
 
-## 🔍 Exemplos de Uso
-
-### Repositório GitHub
+### Caching Configuration
 
 ```bash
-python kiara_cli.py
+# Redis (optional, improves performance)
+REDIS_HOST=localhost
+REDIS_PORT=6379
+REDIS_PASSWORD=
+REDIS_DB=0
+REDIS_TTL=7200
+REDIS_ENABLED=true
 
-# Escolha opção 1 (GitHub)
-# Digite: https://github.com/usuario/projeto
-# Selecione template ou deixe no automático
-# Aguarde a mágica acontecer ✨
+# SQLite (always enabled)
+APP_CACHE_ENABLED=true
+APP_CACHE_TTL=3600
 ```
 
-### Projeto Local
+## 🔍 Usage Examples
+
+### Analyze GitHub Repository
 
 ```bash
-python kiara_cli.py
-
-# Escolha opção 3 (Local Project)
-# Digite o caminho: /path/to/your/project (ou . para atual)
-# Selecione template
-# README será gerado automaticamente
+python kiara_entry.py github https://github.com/user/repo --template=modern
 ```
 
-### Geração em Lote
+### Analyze Local Project
+
+```bash
+python kiara_entry.py analyze ./my-project --template=emoji_rich --output=README_generated.md
+```
+
+### Start Interactive Mode
+
+```bash
+python kiara_entry.py interactive
+```
+
+### Batch Processing
 
 ```bash
 python kiara_interactive_enhanced.py
-
-# Escolha opção 5 (Batch Generation)
-# Adicione múltiplas URLs de repositórios
-# Selecione template comum
-# Kiara processará todos automaticamente
+# Choose option 5 (Batch Generation)
+# Add multiple repository URLs
+# Select common template
+# Kiara processes all automatically
 ```
 
-## 📊 Arquivos Gerados
-
-- **README_kiara_YYYYMMDD_HHMMSS.md**: Documentação gerada com timestamp
-- **cache/github_repos.db**: Banco de dados SQLite3 com histórico
-- **Logs**: Informações detalhadas do processo de geração
-
-## 🧪 Testando a Instalação
+### API Usage
 
 ```bash
-# Teste básico
-python -c "from src.config import get_settings; print('✅ Configuração OK')"
+# Start server
+python kiara_entry.py serve
 
-# Teste Oracle Cloud AI
-python -c "from src.oci_analyzer import OCIAnalyzer; print('✅ OCI OK')"
-
-# Teste GitHub
-python -c "from src.auth_manager import AuthManager; print('✅ GitHub OK')"
-
-# Teste detecção de commits
-python -c "from src.simple_commit_tracker import SimpleCommitTracker; print('✅ Commit Tracker OK')"
+# Generate documentation via API
+curl -X POST "http://localhost:8000/generate" \
+     -H "Content-Type: application/json" \
+     -d '{"url": "https://github.com/user/repo", "template": "modern"}'
 ```
 
-## 🔧 Solução de Problemas
+## 📊 Generated Files
 
-### Erro de Token GitHub
+- **README_kiara_YYYYMMDD_HHMMSS.md**: Generated documentation with timestamp
+- **cache/github_repos.db**: SQLite3 database with repository history
+- **Logs**: Detailed process information and error tracking
+- **API responses**: JSON format for programmatic access
+
+## 🧪 Testing Installation
+
+```bash
+# Basic configuration test
+python -c "from src.config import get_settings; print('✅ Configuration OK')"
+
+# Test xAI Grok (if configured)
+python -c "from src.xai_analyzer import XAIAnalyzer; print('✅ xAI Grok OK')"
+
+# Test Oracle Cloud AI (if configured)
+python -c "from src.oci_analyzer import OCIAnalyzer; print('✅ OCI OK')"
+
+# Test GitHub integration
+python -c "from src.auth_manager import AuthManager; print('✅ GitHub OK')"
+
+# Test commit tracking
+python -c "from src.simple_commit_tracker import SimpleCommitTracker; print('✅ Commit Tracker OK')"
+
+# Run all tests
+python kiara_entry.py info
+```
+
+## 🔧 Troubleshooting
+
+### xAI Grok API Issues
+```
+Error: xAI API authentication failed
+```
+**Solution**: Verify your xAI API key is correct and has sufficient quota
+
+### GitHub Token Issues
 ```
 Error: Authentication validation failed
 ```
-**Solução**: Verifique se o token no `.env` tem os scopes corretos (repo, read:user, user:email)
+**Solution**: Ensure token has correct scopes (repo, read:user, user:email)
 
-### Erro Oracle Cloud
+### Oracle Cloud Issues
 ```
 Error: OCI configuration not found
 ```
-**Solução**: Execute `oci setup config` e configure suas credenciais
+**Solution**: Run `oci setup config` and configure credentials
 
-### Erro de Dependências
+### Dependency Issues
 ```
 ModuleNotFoundError: No module named 'xyz'
 ```
-**Solução**: Execute `uv sync` ou `pip install -r requirements.txt`
+**Solution**: Run `uv sync` or `pip install -r requirements.txt`
 
-### Problemas no Windows
+### Windows Unicode Issues
 ```
-UnicodeDecodeError ou emojis quebrados
+UnicodeDecodeError or broken emojis
 ```
-**Solução**: Kiara já está otimizada para Windows - emojis são convertidos automaticamente
+**Solution**: Kiara auto-detects Windows and handles emoji conversion
+
+### MCP Server Issues
+```
+Error: GitHub MCP Server not found
+```
+**Solution**: Install with `npm install -g @github/github-mcp-server`
 
 ## 📈 Performance
 
-- **Repositórios pequenos**: ~15-30 segundos
-- **Repositórios médios**: ~30-60 segundos  
-- **Repositórios grandes**: ~60-120 segundos
-- **Cache hit**: ~2-5 segundos
-- **Batch processing**: Automático com rate limiting
+### Generation Times
+- **Small repositories**: 15-30 seconds
+- **Medium repositories**: 30-60 seconds
+- **Large repositories**: 60-120 seconds
+- **Cache hit**: 2-5 seconds
+- **Batch processing**: Automatic with rate limiting
 
-## 🚦 Status do Projeto
+### AI Provider Comparison
+- **xAI Grok 4**: Highest quality, 131K tokens, best for complex projects
+- **Oracle Cloud**: Balanced performance, good vision capabilities
+- **Groq**: Fastest inference, good for quick iterations
 
-- ✅ **Estável**: Geração de documentação GitHub
-- ✅ **Estável**: Projetos locais  
-- ✅ **Estável**: Sistema de detecção de commits
-- ✅ **Estável**: Templates adaptativos
-- ✅ **Estável**: Oracle Cloud AI integration
-- 🚧 **Em desenvolvimento**: Azure DevOps completo
-- 🚧 **Planejado**: Plugins personalizados
+### Optimization Tips
+- Enable Redis caching for better performance
+- Use appropriate templates for your project size
+- Enable smart commit detection to avoid unnecessary regenerations
 
-## 🤝 Contribuição
+## 🚦 Project Status
 
-Kiara foi desenvolvida para ser um agente de documentação completo e profissional. Sugestões e melhorias são bem-vindas!
+### ✅ Stable Features
+- GitHub repository documentation generation
+- Local project analysis
+- Smart commit detection system
+- Adaptive templates
+- Multi-AI provider support
+- Vision analysis
+- Caching systems
+- API server
 
-### Estrutura do Projeto
+### 🚧 In Development
+- Complete Azure DevOps integration
+- Custom plugin system
+- Advanced analytics dashboard
+- Team collaboration features
+
+### 🎯 Planned Features
+- GitLab support
+- Bitbucket integration
+- Custom template editor
+- Webhook integrations
+- Documentation versioning
+
+## 📚 API Reference
+
+### REST Endpoints
+
+#### POST /generate
+Generate documentation for a repository
+
+**Request:**
+```json
+{
+  "url": "https://github.com/user/repo",
+  "template": "modern",
+  "force_regenerate": false,
+  "enable_vision": true
+}
+```
+
+**Response:**
+```json
+{
+  "success": true,
+  "documentation": "# Generated README content...",
+  "generation_time": 45.2,
+  "cache_hit": false,
+  "analysis": {
+    "language": "Python",
+    "framework": ["FastAPI", "Pydantic"],
+    "project_type": "Web API"
+  }
+}
+```
+
+#### GET /health
+Check API health status
+
+**Response:**
+```json
+{
+  "status": "healthy",
+  "version": "0.1.0",
+  "ai_providers": {
+    "xai_grok": "enabled",
+    "oracle_cloud": "enabled",
+    "groq": "available"
+  }
+}
+```
+
+## 🏗️ Project Structure
 
 ```
 Kiara/
-├── kiara_cli.py                    # CLI principal
-├── kiara_interactive_enhanced.py   # Interface interativa
-├── pyproject.toml                  # Configuração Python
-├── .env.example                    # Template de configuração
+├── kiara_entry.py                  # Main entry point CLI
+├── kiara_cli.py                    # Simple CLI interface
+├── kiara_interactive_enhanced.py   # Enhanced interactive mode
+├── run_kiara.py                    # Legacy launcher
+├── pyproject.toml                  # Python project configuration
+├── requirements.txt                # Dependencies
+├── .env.example                    # Configuration template
+├── README.md                       # This file
+├── SETUP.md                        # Quick setup guide
 ├── src/
-│   ├── config.py                   # Configurações centralizadas
+│   ├── __init__.py                 # Package initialization
+│   ├── config.py                   # Centralized configuration
+│   ├── main.py                     # Main orchestrator
+│   ├── xai_analyzer.py            # xAI Grok integration
 │   ├── oci_analyzer.py            # Oracle Cloud AI integration
-│   ├── doc_generator.py           # Orquestrador principal
-│   ├── simple_commit_tracker.py   # Detecção de commits
-│   ├── auth_manager.py            # Autenticação GitHub/Azure
-│   ├── mcp_client.py              # GitHub MCP Server client
-│   ├── readme_templates.py        # Templates de documentação
-│   └── ...                        # Outros módulos
+│   ├── groq_analyzer.py           # Groq AI integration
+│   ├── doc_generator.py           # Documentation generator
+│   ├── template_engine.py         # Template system
+│   ├── language_detector.py       # Language detection
+│   ├── vision_processor.py        # Image analysis
+│   ├── simple_commit_tracker.py   # Commit detection
+│   ├── smart_commit_detector.py   # Advanced commit tracking
+│   ├── auth_manager.py            # Authentication management
+│   ├── mcp_client.py              # MCP protocol client
+│   ├── cache_manager.py           # Caching system
+│   ├── local_analyzer.py          # Local project analysis
+│   ├── azure_devops_client.py     # Azure DevOps integration
+│   ├── readme_templates.py        # Template definitions
+│   ├── models.py                  # Data models
+│   └── validators.py              # Input validation
+├── api/
+│   ├── __init__.py                 # API package
+│   ├── main.py                     # FastAPI application
+│   └── test_api.py                 # API tests
 ├── cache/
-│   └── github_repos.db            # Cache SQLite3
-└── api/
-    └── main.py                     # FastAPI server
+│   └── github_repos.db            # SQLite cache database
+└── tests/
+    └── test_*.py                   # Unit tests
 ```
 
-## 📄 Licença
+## 🤝 Contributing
 
-Este projeto é open source e está disponível sob licença MIT.
+Kiara is designed to be a comprehensive and professional documentation agent. Contributions and improvements are welcome!
 
-## 🏷️ Versão
+### Development Setup
 
-**Kiara v1.0** - AI Documentation Agent Enhanced
-- Powered by Oracle Cloud AI (meta.llama-4-maverick-17b-128e-instruct + Scout)
-- Detecção inteligente de commits
-- Templates adaptativos profissionais
-- Suporte completo GitHub + Local Projects
+```bash
+# Clone the repository
+git clone <repository-url>
+cd Kiara
+
+# Install development dependencies
+pip install -e ".[dev]"
+
+# Run tests
+pytest
+
+# Run linting
+black src/
+isort src/
+ruff check src/
+mypy src/
+```
+
+### Contribution Guidelines
+
+1. **Code Quality**: Follow PEP 8 and use provided linting tools
+2. **Testing**: Add tests for new features
+3. **Documentation**: Update README and docstrings
+4. **AI Providers**: Maintain compatibility across all providers
+5. **Backward Compatibility**: Ensure existing features continue working
+
+## 📄 License
+
+This project is open source and available under the MIT License. See the LICENSE file for more details.
+
+## 🏷️ Version Information
+
+**Kiara v0.1.0** - AI Documentation Agent Enhanced
+
+### Core Technologies
+- **Primary AI**: xAI Grok 4 (131K tokens output)
+- **Backup AI**: Oracle Cloud AI (Meta Llama + Scout Vision)  
+- **Fallback AI**: Groq (Llama 3.1 + Vision)
+- **Framework**: FastAPI + Click + Rich
+- **Database**: SQLite3 + Redis
+- **Protocol**: Model Context Protocol (MCP)
+
+### Key Capabilities
+- Multi-provider AI architecture with automatic failover
+- Intelligent commit detection and change tracking
+- Professional adaptive templates
+- Comprehensive GitHub + Local project support
+- Advanced vision analysis and image processing
+- Enterprise-ready caching and performance optimization
 
 ---
 
-**🤖 Desenvolvido com inteligência artificial para gerar documentação inteligente**
+**🤖 Built with artificial intelligence to create intelligent documentation**
 
-*"Making documentation magical since 2025"*
+*"Making documentation magical since 2025"* ✨
