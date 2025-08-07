@@ -1,0 +1,47 @@
+# Kiara - AI Documentation Agent
+# Core dependencies for production usage
+
+# Oracle Cloud Infrastructure AI
+oci>=2.126.0
+
+# Groq AI (fallback provider)
+groq>=0.4.0
+
+# HTTP client and async support
+httpx[test]>=0.25.0
+
+# Data validation and settings
+pydantic>=2.0.0
+pydantic-settings>=2.0.0
+
+# Environment configuration
+python-dotenv>=1.0.0
+
+# Image processing for vision analysis
+pillow>=10.0.0
+
+# CLI interface and rich formatting
+click>=8.0.0
+rich>=13.0.0
+
+# File handling
+aiofiles>=23.0.0
+
+# MCP (Model Context Protocol) client
+mcp>=0.5.0
+
+# API server capabilities
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+
+# Caching (optional but recommended)
+redis[hiredis]>=5.0.0
+
+# Development dependencies (optional)
+# pytest>=7.0.0
+# pytest-asyncio>=0.21.0
+# black>=23.0.0
+# isort>=5.12.0
+# mypy>=1.5.0
+# ruff>=0.1.0
+# coverage>=7.0.0

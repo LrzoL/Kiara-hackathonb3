@@ -1,0 +1,1064 @@
+"""
+4 Distinct README Templates for Optimized Documentation Generation
+Each template generates unique documentation optimized for token limits
+"""
+
+from typing import Dict, Any
+from enum import Enum
+
+class TemplateType(str, Enum):
+    MINIMAL = "minimal"
+    EMOJI_RICH = "emoji_rich"
+    MODERN = "modern"
+    TECHNICAL_DEEP = "technical_deep"
+
+class ReadmeTemplates:
+    """4 distinctly different README templates optimized for Groq LangChain integration"""
+    
+    @staticmethod
+    def get_template_prompt(template_type: TemplateType, project_data: Dict[str, Any]) -> str:
+        """Get the appropriate template prompt based on type and project data"""
+        
+        templates = {
+            TemplateType.MINIMAL: ReadmeTemplates._get_minimal_template(),
+            TemplateType.EMOJI_RICH: ReadmeTemplates._get_emoji_rich_template(), 
+            TemplateType.MODERN: ReadmeTemplates._get_modern_template(),
+            TemplateType.TECHNICAL_DEEP: ReadmeTemplates._get_technical_deep_template()
+        }
+        
+        return templates[template_type]
+    
+    @staticmethod
+    def auto_select_template(project_data: Dict[str, Any]) -> TemplateType:
+        """Automatically select the best template based on project characteristics"""
+        
+        # Extract language and project type from analysis
+        language = project_data.get('language', {}).get('primary_language', '').lower()
+        project_type = project_data.get('architecture', {}).get('project_type', '').lower()
+        frameworks = project_data.get('language', {}).get('frameworks', [])
+        
+        # Data Science projects - redirect to technical deep
+        if any(fw.lower() in ['jupyter', 'pandas', 'numpy', 'scikit-learn', 'tensorflow', 'pytorch', 'matplotlib'] for fw in frameworks):
+            return TemplateType.TECHNICAL_DEEP
+        
+        if language in ['python', 'r'] and any(keyword in project_type for keyword in ['data', 'ml', 'ai', 'analytics']):
+            return TemplateType.TECHNICAL_DEEP
+        
+        # Technical/Enterprise projects
+        if project_type in ['library', 'framework', 'api', 'microservice'] or language in ['java', 'c++', 'rust', 'go']:
+            return TemplateType.TECHNICAL_DEEP
+        
+        # Web projects - modern template
+        if project_type in ['web_application', 'webapp'] or language in ['javascript', 'typescript']:
+            return TemplateType.MODERN
+        
+        # Default to emoji rich for appealing presentation
+        return TemplateType.EMOJI_RICH
+    
+    @staticmethod
+    def _get_minimal_template() -> str:
+        """MINIMAL: Clean, professional README with comprehensive detail"""
+        return """Create a professional, comprehensive README.md for this project with substantial detail in each section.
+
+TARGET OUTPUT: 8,000-12,000 words of detailed, professional documentation.
+
+COMPREHENSIVE STRUCTURE:
+1. # Project Title
+   - Compelling tagline and description (300-400 words)
+   - Clear value proposition and problem it solves
+   - Target audience and use cases
+   - Key differentiators from similar projects
+
+2. ## Overview 
+   - Detailed project description (500-800 words)
+   - Architecture overview and design philosophy
+   - Core concepts and terminology
+   - Project goals and roadmap highlights
+   - Technology stack and design decisions
+
+3. ## Features
+   - Comprehensive feature list with detailed descriptions (800-1000 words)
+   - Feature categories and groupings
+   - Current features vs. planned features
+   - Feature comparison with alternatives
+   - Performance characteristics and benchmarks
+
+4. ## Prerequisites & System Requirements
+   - Detailed system requirements for all platforms
+   - Software dependencies with version constraints
+   - Hardware recommendations
+   - Network requirements if applicable
+   - Environment setup considerations
+
+5. ## Installation
+   - Multiple installation methods (package managers, source, Docker, etc.)
+   - Platform-specific instructions (Windows, macOS, Linux)
+   - Step-by-step installation with verification commands
+   - Common installation issues and solutions
+   - Post-installation configuration steps
+
+6. ## Configuration
+   - Configuration file structure and all available options
+   - Environment variables and their purposes
+   - Advanced configuration scenarios
+   - Performance tuning parameters
+   - Security configuration best practices
+
+7. ## Usage & Examples
+   - Basic usage examples with expected outputs (1000+ words)
+   - Advanced usage patterns and techniques
+   - Real-world use case scenarios
+   - Command-line interface documentation
+   - API usage examples if applicable
+   - Integration examples with other tools
+
+8. ## Project Structure & Architecture
+   - Detailed file/directory organization
+   - Module descriptions and relationships
+   - Data flow and processing pipeline
+   - Extension points and customization
+   - Code organization principles
+
+9. ## Development & Testing
+   - Development environment setup
+   - Build process and tools
+   - Testing framework and running tests
+   - Code quality tools and standards
+   - Debugging and troubleshooting development issues
+
+10. ## Performance & Optimization
+    - Performance characteristics and benchmarks
+    - Optimization techniques and best practices
+    - Resource usage guidelines
+    - Scaling considerations
+    - Monitoring and profiling recommendations
+
+11. ## Troubleshooting
+    - Common issues and their solutions
+    - Debugging techniques and tools
+    - Log analysis and error interpretation
+    - Performance troubleshooting
+    - Support resources and community
+
+12. ## Contributing
+    - Detailed contribution guidelines
+    - Code style and formatting requirements
+    - Testing requirements for contributions
+    - Review process and expectations
+    - Community guidelines and communication
+
+13. ## License & Legal
+    - License type and implications
+    - Third-party licenses and attributions
+    - Usage restrictions and permissions
+    - Commercial use considerations
+
+WRITING REQUIREMENTS:
+- Professional, technical tone without emojis
+- Comprehensive explanations with context
+- Complete, runnable code examples
+- Detailed troubleshooting information
+- Cross-platform considerations
+- Performance and security considerations
+- Clear section hierarchy and navigation
+- Substantial content in each section (minimum 400-600 words per major section)
+- Technical accuracy and completeness
+- Include version compatibility information
+- Provide migration guides if applicable
+
+TARGET: Generate 8,000-12,000 words of high-quality, professional documentation that serves as a complete reference for the project.
+
+PROJECT DATA: {project_data}"""
+
+    @staticmethod
+    def _get_emoji_rich_template() -> str:
+        """EMOJI_RICH: Comprehensive, engaging README with emojis and detailed content"""
+        return """Create an comprehensive, engaging README.md with extensive emojis and enthusiastic tone for this project.
+
+TARGET OUTPUT: 10,000-15,000 words of detailed, emoji-rich, engaging documentation.
+
+COMPREHENSIVE EMOJI-RICH STRUCTURE:
+
+🎯 # Project Title & Mission
+   - 🌟 Compelling project introduction with mission statement (400-500 words)
+   - 🎭 Creative tagline and elevator pitch
+   - 🎨 Visual project identity and branding
+   - 🌈 What makes this project special and unique
+   - 🚀 Vision for the future and project aspirations
+
+🌟 ## Overview & What We Do
+   - 📖 Detailed project story and background (600-800 words)
+   - 🎪 The problem we solve with enthusiasm
+   - 🎯 Target users and their pain points
+   - 🌍 Real-world impact and use cases
+   - 🏆 Success stories and testimonials
+   - 📈 Project statistics and achievements
+
+✨ ## Amazing Features & Capabilities
+   - 🚀 Comprehensive feature showcase (1000-1200 words)
+   - ⭐ Core features with detailed explanations
+   - 🎨 User experience highlights
+   - 🔧 Technical capabilities and innovations
+   - 🌟 Upcoming features and roadmap
+   - 📊 Feature comparison with competitors
+   - 🎉 What users love most about each feature
+
+🛠️ ## Prerequisites & Getting Ready
+   - 💻 Detailed system requirements for all platforms
+   - 📋 Software and hardware prerequisites
+   - 🌐 Network and environment considerations
+   - 🔐 Security and permissions setup
+   - 📚 Background knowledge recommendations
+   - ⚡ Performance requirements and recommendations
+
+📦 ## Installation & Setup Adventure
+   - 🎯 Quick start for impatient users
+   - 🐧 Linux installation with multiple distribution support
+   - 🍎 macOS installation with Homebrew and manual methods
+   - 🪟 Windows installation with multiple approaches
+   - 🐳 Docker installation and containerization
+   - 📱 Mobile/cross-platform considerations
+   - 🔧 Advanced installation customization
+   - 🚨 Troubleshooting installation issues
+   - ✅ Installation verification and health checks
+
+⚙️ ## Configuration & Customization
+   - 📝 Configuration file deep dive
+   - 🌍 Environment variables and their magic
+   - 🎛️ Advanced configuration scenarios
+   - 🎨 Theming and customization options
+   - 🔐 Security configuration best practices
+   - 🚀 Performance tuning and optimization
+   - 🔄 Configuration migration and updates
+
+🚀 ## Usage Examples & Tutorials  
+   - 🌟 Getting started tutorial (800-1000 words)
+   - 🎯 Basic usage examples with expected outputs
+   - 🚀 Advanced usage patterns and techniques
+   - 🎪 Creative use cases and inspiration
+   - 💡 Tips, tricks, and pro techniques
+   - 🎬 Video tutorials and interactive demos
+   - 📚 Learning resources and documentation
+   - 🤝 Community examples and showcases
+
+🏗️ ## Project Architecture & Structure
+   - 📁 Detailed file and directory organization
+   - 🧩 Module relationships and dependencies
+   - 🔄 Data flow and processing pipeline
+   - 🎨 Design patterns and architectural decisions
+   - 🔌 Extension points and plugin system
+   - 📦 Package structure and distribution
+   - 🔍 Code organization philosophy
+
+🧪 ## Development & Testing Excellence
+   - 💻 Development environment setup guide
+   - 🔨 Build process and automation tools
+   - 🧪 Testing framework and best practices
+   - 📊 Code quality tools and metrics
+   - 🐛 Debugging techniques and tools
+   - 🚀 Continuous integration and deployment
+   - 📝 Documentation generation and maintenance
+
+⚡ ## Performance & Optimization Magic
+   - 🏎️ Performance characteristics and benchmarks
+   - 🔧 Optimization techniques and best practices  
+   - 📊 Resource usage guidelines and monitoring
+   - 📈 Scaling strategies and considerations
+   - 🔍 Profiling and performance analysis
+   - 💾 Memory management and efficiency
+   - 🌐 Network optimization and caching
+
+🔧 ## Troubleshooting & Support Hub
+   - 🚨 Common issues and their solutions
+   - 🔍 Debugging techniques and methodologies
+   - 📋 Error message interpretation guide
+   - 🩺 Health checks and diagnostic tools
+   - 📞 Getting help from the community
+   - 💬 Support channels and resources
+   - 🐛 Bug reporting guidelines
+   - 📚 FAQ with detailed answers
+
+🤝 ## Contributing & Community
+   - 💖 How to become part of our amazing community
+   - 📋 Detailed contribution guidelines and workflow
+   - 🎨 Code style and formatting requirements
+   - 🧪 Testing requirements for contributions
+   - 👥 Review process and collaboration
+   - 🌟 Recognition and contributor appreciation
+   - 📢 Communication channels and etiquette
+   - 🎉 Events, meetups, and community activities
+
+🌍 ## Community & Ecosystem
+   - 👥 Our amazing community members and maintainers
+   - 🎉 Success stories and user showcases
+   - 🔗 Related projects and integrations
+   - 📚 Third-party tools and resources
+   - 🎪 Events, conferences, and meetups
+   - 📱 Social media and online presence
+   - 🏆 Awards and recognition received
+
+🔮 ## Roadmap & Future Vision
+   - 🗺️ Current development roadmap
+   - 🌟 Planned features and improvements
+   - 🎯 Long-term vision and goals
+   - 💡 Ideas and feature requests
+   - 📊 Community feedback integration
+   - 🚀 Innovation and research directions
+
+📜 ## License & Legal Information
+   - ⚖️ License type and detailed implications
+   - 📋 Third-party licenses and attributions
+   - 🔒 Usage rights and restrictions
+   - 💼 Commercial use considerations and guidelines
+   - 📞 Legal contact information
+
+🎉 ## Acknowledgments & Credits
+   - 💖 Special thanks to contributors and supporters
+   - 🌟 Inspiration and influences
+   - 🎪 Tools and technologies that made this possible
+   - 🏆 Awards and recognition received
+   - 📚 Research and references
+
+WRITING STYLE REQUIREMENTS:
+- 🎨 Use extensive emojis throughout (at least 2-3 per section)
+- 🎭 Enthusiastic, friendly, and engaging tone
+- 🎪 Make technical content approachable and fun
+- 🌟 Create visual appeal with emoji organization
+- 🚀 Use action-oriented language and excitement
+- 💖 Show passion for the project and community
+- 🎯 Balance entertainment with technical accuracy
+- 📚 Include detailed explanations with personality
+- 🎉 Celebrate features and accomplishments
+- 🤝 Encourage community participation
+- 🌈 Create an inclusive and welcoming atmosphere
+
+TARGET: Generate 10,000-15,000 words of engaging, comprehensive, emoji-rich documentation that makes users excited to try and contribute to the project.
+
+PROJECT DATA: {project_data}"""
+
+    @staticmethod
+    def _get_modern_template() -> str:
+        """MODERN: Comprehensive contemporary GitHub-style README with advanced features"""
+        return """Create a comprehensive, modern GitHub-style README.md with cutting-edge features and contemporary design.
+
+TARGET OUTPUT: 12,000-18,000 words of detailed, modern, professional documentation.
+
+COMPREHENSIVE MODERN STRUCTURE:
+
+<div align="center">
+
+# 🚀 Project Title
+*Innovative tagline that captures the essence*
+
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](link)
+[![Version](https://img.shields.io/badge/version-2.0.0-blue)](link)
+[![License](https://img.shields.io/badge/license-MIT-green)](link)
+[![Contributors](https://img.shields.io/badge/contributors-welcome-orange)](link)
+[![Stars](https://img.shields.io/github/stars/user/repo)](link)
+[![Forks](https://img.shields.io/github/forks/user/repo)](link)
+[![Issues](https://img.shields.io/github/issues/user/repo)](link)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](link)
+[![Code Quality](https://img.shields.io/badge/code%20quality-A+-brightgreen)](link)
+[![Downloads](https://img.shields.io/badge/downloads-1M%2B-blue)](link)
+
+![Hero Image or GIF](hero-image-url)
+
+</div>
+
+---
+
+## 📋 Table of Contents
+
+<details>
+<summary>Click to expand navigation</summary>
+
+- [🎯 Overview](#overview)
+- [✨ Key Features](#features)
+- [🎬 Demo & Screenshots](#demo)
+- [🚀 Quick Start](#quick-start)
+- [⚙️ Installation](#installation)
+- [🔧 Configuration](#configuration)
+- [💻 Usage Examples](#usage)
+- [📚 API Documentation](#api)
+- [🏗️ Architecture](#architecture)
+- [🧪 Testing](#testing)
+- [📈 Performance](#performance)
+- [🔐 Security](#security)
+- [🐳 Docker Support](#docker)
+- [☁️ Cloud Deployment](#deployment)
+- [🛠️ Development](#development)
+- [🔧 Troubleshooting](#troubleshooting)
+- [🤝 Contributing](#contributing)
+- [📝 Changelog](#changelog)
+- [🗺️ Roadmap](#roadmap)
+- [🙏 Acknowledgments](#acknowledgments)
+- [📜 License](#license)
+
+</details>
+
+---
+
+## 🎯 Overview
+
+**Comprehensive project description with modern appeal (800-1000 words)**
+
+> 💡 **TL;DR**: One-line summary of what this project does and why it matters.
+
+### 🌟 What This Project Does
+- Detailed explanation of the project's primary purpose
+- The specific problem it solves in the modern landscape
+- Target audience and use case scenarios
+- Value proposition and competitive advantages
+
+### 🎯 Why Choose This Project
+- Unique selling points and differentiators
+- Comparison with existing solutions
+- Performance benchmarks and metrics
+- Community adoption and trust indicators
+
+### 📊 Project Statistics
+| Metric | Value | Description |
+|--------|-------|-------------|
+| ⭐ Stars | 5,000+ | GitHub stars and community support |
+| 📦 Downloads | 100K+/month | Package downloads across platforms |
+| 🏢 Used By | 500+ companies | Enterprise adoption rate |
+| 🌍 Languages | 15+ | Internationalization support |
+| 📈 Growth | +200%/year | Year-over-year growth rate |
+
+---
+
+## ✨ Key Features
+
+**Comprehensive feature showcase with modern presentation (1200-1500 words)**
+
+### 🚀 Core Capabilities
+
+<div align="center">
+
+| Feature | Description | Status | Version |
+|---------|-------------|--------|---------|
+| 🔥 **Core Engine** | High-performance processing core | ✅ Stable | v2.0+ |
+| 🎨 **Modern UI** | Responsive, accessible interface | ✅ Stable | v1.5+ |
+| 🔐 **Security** | Enterprise-grade security features | ✅ Stable | v1.0+ |
+| 🌍 **Multi-platform** | Windows, macOS, Linux support | ✅ Stable | v1.0+ |
+| 📡 **Real-time** | Live updates and notifications | ✅ Stable | v1.8+ |
+| 🔌 **Extensible** | Plugin architecture and APIs | ✅ Stable | v2.0+ |
+| ☁️ **Cloud-ready** | Kubernetes and Docker support | ✅ Stable | v1.9+ |
+| 📊 **Analytics** | Built-in metrics and monitoring | 🚧 Beta | v2.1+ |
+| 🤖 **AI Integration** | Machine learning capabilities | 🔬 Experimental | v2.2+ |
+
+</div>
+
+### 💎 Advanced Features
+
+<details>
+<summary>🔥 Performance & Scalability</summary>
+
+- **Lightning Fast**: Sub-100ms response times
+- **Horizontal Scaling**: Auto-scaling support
+- **Resource Efficient**: Minimal memory footprint
+- **Caching**: Multi-layer caching system
+- **Load Balancing**: Built-in load distribution
+
+</details>
+
+<details>
+<summary>🔐 Security & Compliance</summary>
+
+- **End-to-End Encryption**: AES-256 encryption
+- **OAuth 2.0/OIDC**: Modern authentication
+- **RBAC**: Role-based access control
+- **Audit Logs**: Comprehensive activity tracking
+- **Compliance**: GDPR, SOC2, HIPAA ready
+
+</details>
+
+<details>
+<summary>🌍 Integration & Compatibility</summary>
+
+- **REST APIs**: Full RESTful API support
+- **GraphQL**: Modern query language support
+- **Webhooks**: Real-time event notifications
+- **SDKs**: Official SDKs for 10+ languages
+- **Third-party**: 50+ pre-built integrations
+
+</details>
+
+---
+
+## 🎬 Demo & Screenshots
+
+### 🖼️ Visual Showcase
+
+<div align="center">
+
+| Feature | Screenshot | Description |
+|---------|------------|-------------|
+| **Dashboard** | ![Dashboard](dashboard.png) | Main interface overview |
+| **Analytics** | ![Analytics](analytics.png) | Real-time metrics view |
+| **Settings** | ![Settings](settings.png) | Configuration interface |
+
+</div>
+
+### 🎥 Video Demonstrations
+- [📹 Quick Start Tutorial (3 min)](video-link)
+- [📹 Advanced Features Deep Dive (15 min)](video-link)
+- [📹 API Integration Examples (8 min)](video-link)
+
+---
+
+## 🚀 Quick Start
+
+### ⚡ 30-Second Setup
+
+```bash
+# One-liner installation and setup
+curl -sSL https://get.project.com/install | sh && project init
+```
+
+### 🎯 Your First Success
+
+```bash
+# Create your first project
+project create my-awesome-app
+
+# Start the development server
+project serve
+
+# Open http://localhost:3000 🎉
+```
+
+---
+
+## ⚙️ Installation
+
+**Comprehensive installation guide for all platforms (1500-2000 words)**
+
+### 📋 System Requirements
+
+| Component | Minimum | Recommended |
+|-----------|---------|-------------|
+| **OS** | Windows 10, macOS 10.14, Ubuntu 18.04 | Latest versions |
+| **CPU** | 2 cores, 2.0 GHz | 4+ cores, 3.0+ GHz |
+| **RAM** | 4 GB | 8+ GB |
+| **Disk** | 2 GB free space | 10+ GB SSD |
+| **Network** | Broadband internet | High-speed fiber |
+
+### 🐧 Linux Installation
+
+<details>
+<summary>Ubuntu/Debian</summary>
+
+```bash
+# Update system
+sudo apt update && sudo apt upgrade -y
+
+# Add official repository
+curl -sSL https://packages.project.com/gpg.key | sudo apt-key add -
+echo "deb https://packages.project.com/ubuntu $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/project.list
+
+# Install
+sudo apt update && sudo apt install project-cli
+
+# Verify installation
+project --version
+```
+
+</details>
+
+<details>
+<summary>CentOS/RHEL/Fedora</summary>
+
+```bash
+# Add repository
+sudo tee /etc/yum.repos.d/project.repo << EOF
+[project]
+name=Project Repository
+baseurl=https://packages.project.com/rpm/
+enabled=1
+gpgcheck=1
+gpgkey=https://packages.project.com/gpg.key
+EOF
+
+# Install
+sudo dnf install project-cli  # Fedora
+# OR
+sudo yum install project-cli  # CentOS/RHEL
+
+# Verify
+project --version
+```
+
+</details>
+
+### 🍎 macOS Installation
+
+<details>
+<summary>Homebrew (Recommended)</summary>
+
+```bash
+# Install via Homebrew
+brew tap project/tap
+brew install project-cli
+
+# Verify installation
+project --version
+
+# Optional: Install shell completions
+project completion bash > /usr/local/etc/bash_completion.d/project
+```
+
+</details>
+
+<details>
+<summary>Manual Installation</summary>
+
+```bash
+# Download latest release
+curl -LO https://github.com/project/releases/latest/download/project-darwin-amd64.tar.gz
+
+# Extract and install
+tar -xzf project-darwin-amd64.tar.gz
+sudo mv project /usr/local/bin/
+
+# Verify
+project --version
+```
+
+</details>
+
+### 🪟 Windows Installation
+
+<details>
+<summary>Winget (Recommended)</summary>
+
+```powershell
+# Install via Windows Package Manager
+winget install Project.CLI
+
+# Verify installation
+project --version
+```
+
+</details>
+
+<details>
+<summary>Chocolatey</summary>
+
+```powershell
+# Install Chocolatey first (if not installed)
+Set-ExecutionPolicy Bypass -Scope Process -Force
+iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+
+# Install project
+choco install project-cli
+
+# Verify
+project --version
+```
+
+</details>
+
+<details>
+<summary>Manual Installation</summary>
+
+```powershell
+# Download from GitHub releases
+Invoke-WebRequest -Uri "https://github.com/project/releases/latest/download/project-windows-amd64.zip" -OutFile "project.zip"
+
+# Extract to Program Files
+Expand-Archive -Path "project.zip" -DestinationPath "C:\Program Files\Project"
+
+# Add to PATH (PowerShell as Administrator)
+$env:PATH += ";C:\Program Files\Project"
+[Environment]::SetEnvironmentVariable("PATH", $env:PATH, [EnvironmentVariableTarget]::Machine)
+```
+
+</details>
+
+### 🐳 Docker Installation
+
+```bash
+# Pull official image
+docker pull project/cli:latest
+
+# Run container
+docker run -it --rm project/cli:latest
+
+# Or with volume mounting
+docker run -it --rm -v $(pwd):/workspace project/cli:latest
+```
+
+### 📦 Package Managers
+
+| Platform | Command |
+|----------|---------|
+| **npm** | `npm install -g @project/cli` |
+| **yarn** | `yarn global add @project/cli` |
+| **pip** | `pip install project-cli` |
+| **cargo** | `cargo install project-cli` |
+| **go** | `go install github.com/project/cli@latest` |
+
+---
+
+WRITING STYLE REQUIREMENTS:
+- 🎨 Modern GitHub aesthetic with badges, tables, and collapsible sections
+- 📊 Extensive use of tables for organized information
+- 🎯 Visual hierarchy with proper heading structure
+- 💻 Syntax highlighting for all code blocks
+- 📱 Mobile-friendly responsive design considerations
+- 🔗 Rich linking and cross-references
+- 📈 Data-driven content with metrics and benchmarks
+- 🎪 Engaging visual elements (badges, images, diagrams)
+- 📚 Comprehensive technical detail with accessibility
+- 🌟 Professional yet approachable tone
+- 🚀 Action-oriented language that encourages engagement
+- 📋 Structured information with clear navigation
+
+TARGET: Generate 12,000-18,000 words of comprehensive, modern, professional documentation that represents current best practices in open source project documentation.
+
+PROJECT DATA: {project_data}"""
+
+    @staticmethod
+    def _get_technical_deep_template() -> str:
+        """TECHNICAL_DEEP: Comprehensive enterprise-grade technical documentation"""
+        return """Create comprehensive, enterprise-grade technical documentation for this project with extensive detail and formal structure.
+
+TARGET OUTPUT: 15,000-20,000 words of detailed, technical, enterprise-focused documentation.
+
+COMPREHENSIVE TECHNICAL DOCUMENTATION STRUCTURE:
+
+# 📋 Project Title
+**Enterprise Technical Documentation**
+
+---
+
+## 📊 Executive Summary
+
+**Comprehensive project overview for technical stakeholders (800-1000 words)**
+
+### 🎯 Project Overview
+- **Business Context**: Strategic importance and business justification
+- **Technical Vision**: Long-term technical strategy and goals  
+- **Scope & Boundaries**: What this system does and does not include
+- **Success Metrics**: Key performance indicators and success criteria
+- **Stakeholder Impact**: Effect on different organizational stakeholders
+
+### 📈 Business Value Proposition
+- **ROI Analysis**: Return on investment calculations and projections
+- **Cost-Benefit Analysis**: Implementation costs vs. operational benefits
+- **Risk Assessment**: Technical, operational, and business risks
+- **Competitive Advantage**: How this system provides market differentiation
+- **Scalability Impact**: Growth potential and capacity planning
+
+### 🏗️ Technical Summary
+- **Architecture Overview**: High-level system design principles
+- **Technology Stack**: Core technologies and rationale for selection
+- **Integration Points**: External system dependencies and interfaces
+- **Data Management**: Data flow, storage, and governance approach
+- **Security Posture**: Security architecture and compliance stance
+
+---
+
+## 🏛️ System Architecture & Design
+
+**Detailed architectural documentation (2000-2500 words)**
+
+### 🔧 Architecture Principles
+- **Design Philosophy**: Core architectural principles and decision drivers
+- **Scalability Strategy**: Horizontal and vertical scaling approaches
+- **Resilience Patterns**: Fault tolerance and disaster recovery design
+- **Security-by-Design**: Integrated security architectural patterns
+- **Maintainability**: Code organization and maintainability strategies
+
+### 🏗️ System Components
+
+#### Core Components
+```mermaid
+graph TB
+    A[User Interface Layer] --> B[API Gateway]
+    B --> C[Business Logic Layer]
+    C --> D[Data Access Layer]
+    D --> E[Database Layer]
+    
+    F[Authentication Service] --> B
+    G[Caching Layer] --> C
+    H[Message Queue] --> C
+    I[External APIs] --> B
+```
+
+| Component | Responsibility | Technology | Scalability |
+|-----------|---------------|------------|-------------|
+| **API Gateway** | Request routing, rate limiting, authentication | Kong/AWS API Gateway | Horizontal |
+| **Business Logic** | Core application logic and workflows | Java/Spring Boot | Horizontal |
+| **Data Access** | Database abstraction and optimization | JPA/Hibernate | Connection pooling |
+| **Database** | Data persistence and integrity | PostgreSQL/MySQL | Read replicas |
+| **Caching** | Performance optimization | Redis/Memcached | Horizontal sharding |
+| **Message Queue** | Asynchronous processing | RabbitMQ/Kafka | Cluster mode |
+
+### 🔄 Data Flow Architecture
+
+#### Request Processing Flow
+1. **Client Request**: HTTP/HTTPS request to API Gateway
+2. **Authentication**: Token validation and user authorization
+3. **Rate Limiting**: Request throttling and quota enforcement
+4. **Business Logic**: Core processing and business rules
+5. **Data Access**: Database queries and data manipulation
+6. **Response Formation**: Result processing and formatting
+7. **Client Response**: JSON/XML response with appropriate status codes
+
+#### Data Pipeline Architecture
+- **Ingestion Layer**: Real-time and batch data ingestion mechanisms
+- **Processing Layer**: ETL/ELT operations and data transformations
+- **Storage Layer**: Structured and unstructured data storage solutions
+- **Analytics Layer**: Business intelligence and reporting capabilities
+- **API Layer**: Data access APIs for internal and external consumption
+
+### 🌐 Integration Architecture
+
+#### Internal Integrations
+- **Service Mesh**: Inter-service communication patterns
+- **Event-Driven Architecture**: Event sourcing and CQRS patterns
+- **Microservices Communication**: Synchronous and asynchronous patterns
+- **Data Synchronization**: Consistency and eventual consistency patterns
+
+#### External Integrations
+- **Third-Party APIs**: Integration patterns and error handling
+- **Legacy System Integration**: Adapter patterns and data transformation
+- **Partner Integrations**: B2B communication protocols and standards
+- **Cloud Service Integration**: Multi-cloud and hybrid cloud strategies
+
+---
+
+## 📋 Technical Specifications
+
+**Detailed technical requirements and constraints (1500-2000 words)**
+
+### 🖥️ System Requirements
+
+#### Hardware Requirements
+| Environment | CPU | Memory | Storage | Network |
+|-------------|-----|--------|---------|---------|
+| **Development** | 4 cores, 2.4GHz | 8GB RAM | 100GB SSD | 100Mbps |
+| **Testing** | 8 cores, 3.0GHz | 16GB RAM | 500GB SSD | 1Gbps |
+| **Staging** | 16 cores, 3.2GHz | 32GB RAM | 1TB SSD | 1Gbps |
+| **Production** | 32 cores, 3.5GHz | 64GB RAM | 2TB SSD | 10Gbps |
+
+#### Software Requirements
+- **Operating System**: Linux (Ubuntu 20.04 LTS+, CentOS 8+, RHEL 8+)
+- **Runtime Environment**: Java 11+, Node.js 16+, Python 3.9+
+- **Database Systems**: PostgreSQL 13+, MongoDB 5.0+, Redis 6.2+
+- **Container Platform**: Docker 20.10+, Kubernetes 1.21+
+- **Message Broker**: Apache Kafka 2.8+, RabbitMQ 3.9+
+
+### ⚡ Performance Specifications
+
+#### Response Time Requirements
+- **API Endpoints**: 95th percentile < 200ms, 99th percentile < 500ms
+- **Database Queries**: Average < 50ms, Complex queries < 200ms
+- **File Operations**: Upload/Download > 50MB/s sustained
+- **Search Operations**: Full-text search < 100ms for 10M+ records
+
+#### Throughput Requirements
+- **Concurrent Users**: 10,000+ simultaneous active users
+- **Request Volume**: 50,000+ requests per second peak
+- **Data Processing**: 1TB+ daily data processing capacity
+- **Batch Operations**: 1M+ records per batch job
+
+#### Resource Utilization
+- **CPU Utilization**: Target 70% average, 90% peak
+- **Memory Usage**: 80% maximum with garbage collection optimization
+- **Disk I/O**: 1000+ IOPS sustained, 5000+ IOPS peak
+- **Network Bandwidth**: 80% utilization with burst capacity
+
+### 🔐 Security Specifications
+
+#### Authentication & Authorization
+- **Multi-Factor Authentication**: TOTP, SMS, Hardware tokens
+- **Single Sign-On**: SAML 2.0, OAuth 2.0/OIDC integration
+- **Role-Based Access Control**: Granular permission system
+- **API Security**: JWT tokens, API key management, rate limiting
+
+#### Data Protection
+- **Encryption at Rest**: AES-256 encryption for all sensitive data
+- **Encryption in Transit**: TLS 1.3 for all network communication
+- **Data Masking**: PII protection in non-production environments
+- **Backup Encryption**: Encrypted backups with key rotation
+
+#### Compliance Requirements
+- **GDPR Compliance**: Data privacy and right to be forgotten
+- **SOC 2 Type II**: Security and availability controls
+- **ISO 27001**: Information security management system
+- **PCI DSS**: Payment card industry data security (if applicable)
+
+---
+
+## 🚀 Installation & Deployment Guide
+
+**Comprehensive deployment documentation (2000-2500 words)**
+
+### 🏗️ Infrastructure Prerequisites
+
+#### Cloud Infrastructure
+```yaml
+# Terraform Infrastructure Definition
+provider "aws" {
+  region = "us-west-2"
+}
+
+resource "aws_eks_cluster" "main" {
+  name     = "production-cluster"
+  role_arn = aws_iam_role.cluster.arn
+  version  = "1.21"
+  
+  vpc_config {
+    subnet_ids = aws_subnet.private[*].id
+    endpoint_private_access = true
+    endpoint_public_access  = true
+  }
+}
+```
+
+#### Database Setup
+```sql
+-- Production Database Initialization
+CREATE DATABASE production_db 
+  WITH ENCODING 'UTF8' 
+  LC_COLLATE = 'en_US.UTF-8' 
+  LC_CTYPE = 'en_US.UTF-8';
+
+-- Performance Optimization
+ALTER SYSTEM SET shared_buffers = '8GB';
+ALTER SYSTEM SET effective_cache_size = '24GB';
+ALTER SYSTEM SET maintenance_work_mem = '2GB';
+ALTER SYSTEM SET checkpoint_completion_target = 0.9;
+```
+
+### 📦 Application Deployment
+
+#### Container Deployment
+```dockerfile
+# Multi-stage Production Dockerfile
+FROM node:16-alpine AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+
+FROM node:16-alpine AS runtime
+RUN addgroup -g 1001 -S nodejs && adduser -S nextjs -u 1001
+WORKDIR /app
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
+COPY --chown=nextjs:nodejs . .
+USER nextjs
+EXPOSE 3000
+CMD ["npm", "start"]
+```
+
+#### Kubernetes Deployment
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: application-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: application
+  template:
+    metadata:
+      labels:
+        app: application
+    spec:
+      containers:
+      - name: application
+        image: myregistry/application:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: NODE_ENV
+          value: "production"
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+```
+
+### 🔧 Configuration Management
+
+#### Environment Configuration
+```yaml
+# Production Configuration (config/production.yaml)
+database:
+  host: ${DB_HOST}
+  port: ${DB_PORT}
+  name: ${DB_NAME}
+  ssl: true
+  pool_size: 20
+  timeout: 30000
+
+cache:
+  redis:
+    cluster_mode: true
+    nodes:
+      - ${REDIS_NODE_1}
+      - ${REDIS_NODE_2}
+      - ${REDIS_NODE_3}
+    
+monitoring:
+  metrics:
+    enabled: true
+    port: 9090
+  logging:
+    level: "info"
+    format: "json"
+```
+
+---
+
+WRITING STYLE REQUIREMENTS:
+- 📋 Formal, technical tone appropriate for enterprise documentation
+- 🏛️ Structured hierarchy with clear section organization
+- 📊 Extensive use of technical diagrams and charts
+- 💻 Detailed code examples and configuration samples
+- 🔧 Comprehensive technical specifications and requirements
+- 📈 Performance metrics and benchmarking data
+- 🔐 Security considerations integrated throughout
+- 🏗️ Architecture diagrams and system design documentation
+- 📚 Reference-quality content for technical teams
+- 🎯 Actionable implementation guidance
+- 📋 Compliance and governance considerations
+- 🔍 Detailed troubleshooting and operational procedures
+
+TARGET: Generate 15,000-20,000 words of comprehensive, enterprise-grade technical documentation that serves as a complete reference for technical teams, architects, and operations personnel.
+
+PROJECT DATA: {project_data}"""
+
+# Available template types for external use
+AVAILABLE_TEMPLATES = [
+    TemplateType.MINIMAL,
+    TemplateType.EMOJI_RICH,
+    TemplateType.MODERN,
+    TemplateType.TECHNICAL_DEEP
+]
+
+# Utility functions for external use
+def get_template_by_type(template_type: str, project_data: Dict[str, Any]) -> str:
+    """Get template prompt by string type"""
+    if template_type not in [t.value for t in AVAILABLE_TEMPLATES]:
+        template_type = TemplateType.EMOJI_RICH.value
+    
+    template_enum = TemplateType(template_type)
+    return ReadmeTemplates.get_template_prompt(template_enum, project_data)
+
+def auto_select_template_type(project_data: Dict[str, Any]) -> str:
+    """Auto-select template and return as string"""
+    selected_template = ReadmeTemplates.auto_select_template(project_data)
+    return selected_template.value
+
+def list_available_templates() -> list:
+    """List all available template types"""
+    return [template.value for template in AVAILABLE_TEMPLATES]
